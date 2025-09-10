@@ -2,6 +2,7 @@ from Weather_Class import WeatherData
 from Weather_DB import WeatherRecord, Base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from tabulate import tabulate
 
 def save_weather_to_db (weather_data: WeatherData):
     #This method populates the weather data for the location
@@ -50,3 +51,30 @@ def save_weather_to_db (weather_data: WeatherData):
         session.commit()
         print(f"Saved weather data for {weather_data.year}.")
         session.close()
+
+def display_all_records():
+    """This generates the data for the screenshot displaying in a
+        formatted manner"""
+    engine = create_engine('sqlite:///weather.db')
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    records = session.query(WeatherRecord).all()
+    for record in records:
+        print(f"\nWeather Data for {record.month}/{record.day}/{record.year}")
+        data = [
+            ["Latitude", record.latitude],
+            ["Longitude", record.longitude],
+            ["Avg Temp (°F)", record.avg_temp],
+            ["Min Temp (°F)", record.min_temp],
+            ["Max Temp (°F)", record.max_temp],
+            ["Avg Wind Speed (mph)", record.avg_wind_speed],
+            ["Min Wind Speed (mph)", record.min_wind_speed],
+            ["Max Wind Speed (mph)", record.max_wind_speed],
+            ["Sum Precipitation (in)", record.sum_precipitation],
+            ["Min Precipitation (in)", record.min_precipitation],
+            ["Max Precipitation (in)", record.max_precipitation],
+        ]
+        print(f"\nWeather Data for {record.month}/{record.day}/{record.year}")
+
+    session.close()
