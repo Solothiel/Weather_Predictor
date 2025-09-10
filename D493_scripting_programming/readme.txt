@@ -1,0 +1,46 @@
+API URL
+Lat: 43.46
+Long: -112.04
+Date used 06 15 2024
+https://api.open-meteo.com/v1/forecast?latitude=43.4666&longitude=-112.0341&hourly=temperature_2m
+
+api key: 'b1cd4e6d43358945332970a3b2a28498'
+
+I have toyed around with the Idea of displaying the city and id in the database, but I couldn't get to work.
+Def get_city_name(latitude, longitude, api_key)
+
+
+The Project is wanting to get 5-year historical data for a location.
+
+Needing to retrieve data from the link above and then calculate the data groupings for the location.
+    Average, minimum and maximum temperature.   (used Fahrenheit)
+    Average, minimum and maximum wind speed. (used miles per hour)
+    Total, minimum and maximum precipitation (in inches)
+
+The information gathered is stored in SQLite database using SQLAlchemy Object-Relational Mapping.
+
+Built error responses if the information was not found.
+
+This is what the input will look like
+Enter location and date to fetch 5-year historical weather data.
+Enter latitude: 43.46
+Enter longitude: -112.04
+Enter number for the month: 06
+Enter number for the day: 15
+Enter 4 digit number for year: 2024
+Weather data saved to SQLite database
+
+Sample out put.
+Retrieved Weather Data from Database:
+Weather Data for 6/15/2024
+Latitude: 43.46
+Longitude: -112.04
+Avg Temp: 64.98 °F
+Min Temp: 52.0 °F
+Max Temp: 81.6 °F
+Avg Wind Speed: 15.2 mph
+Min Wind Speed: 12.2 mph
+Max Wind Speed: 23.7 mph
+Sum Precipitation: 0.0 in
+Min Precipitation: 0.0 in
+Max Precipitation: 0.0 in
