@@ -23,7 +23,7 @@ def save_weather_to_db (weather_data: WeatherData):
         max_temp=weather_data.five_year_max_temp,
 
         avg_wind_speed=weather_data.five_year_avg_wind,
-        min_wind_spee=weather_data.five_year_min_wind,
+        min_wind_speed=weather_data.five_year_min_wind,
         max_wind_speed=weather_data.five_year_max_wind,
 
         sum_precipitation=weather_data.five_year_sum_precip,
@@ -62,19 +62,37 @@ def display_all_records():
     records = session.query(WeatherRecord).all()
     for record in records:
         print(f"\nWeather Data for {record.month}/{record.day}/{record.year}")
-        data = [
-            ["Latitude", record.latitude],
-            ["Longitude", record.longitude],
-            ["Avg Temp (°F)", record.avg_temp],
-            ["Min Temp (°F)", record.min_temp],
-            ["Max Temp (°F)", record.max_temp],
-            ["Avg Wind Speed (mph)", record.avg_wind_speed],
-            ["Min Wind Speed (mph)", record.min_wind_speed],
-            ["Max Wind Speed (mph)", record.max_wind_speed],
-            ["Sum Precipitation (in)", record.sum_precipitation],
-            ["Min Precipitation (in)", record.min_precipitation],
-            ["Max Precipitation (in)", record.max_precipitation],
-        ]
-        print(f"\nWeather Data for {record.month}/{record.day}/{record.year}")
+        print(f"Latitude: {record.latitude}")
+        print(f"Longitude: {record.longitude}")
+        print(f"Avg Temp: {record.avg_temp} °F")
+        print(f"Min Temp: {record.min_temp} °F")
+        print(f"Max Temp: {record.max_temp} °F")
+        print(f"Avg Wind Speed: {record.avg_wind_speed} mph")
+        print(f"Min Wind Speed: {record.min_wind_speed} mph")
+        print(f"Max Wind Speed: {record.max_wind_speed} mph")
+        print(f"Sum Precipitation: {record.sum_precipitation} in")
+        print(f"Min Precipitation: {record.min_precipitation} in")
+        print(f"Max Precipitation: {record.max_precipitation} in")
 
     session.close()
+
+def main():
+    """ This is the instance to call methods for the daily weather variables, currently
+        I have the information hard coded for Idaho falls June 15 2024"""
+    latitude = 43.4927
+    longitude = -112.0408
+    month = 6
+    day = 15
+    year = 2024
+    weather = WeatherData(latitude, longitude, month, day, year)
+    weather.fetch_temperature_5yr()
+    weather.fetch_wind_5yr()
+    weather.fetch_precip_5yr()
+
+    save_weather_to_db(weather)
+    display_all_records()
+
+    """this it the instance that starts the call Weather_Class.py 
+     and the WeatherData class."""
+if __name__ == "__main__":
+    main()
